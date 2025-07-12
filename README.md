@@ -27,7 +27,7 @@ Un bot **fácil de configurar** para responder automáticamente preguntas frecue
 ## 📂 Estructura del Proyecto
 
 ```plaintext
-Bot-FAQ-Telegram/
+Bot-PreguntasFrecuentes/
 ├── 📜 IniciarBot.bat          - Script para lanzar el bot
 ├── ⚙️ ConfigurarEntorno.bat   - Instalador automático
 ├── 📝 requerimientos.txt      - Dependencias necesarias
