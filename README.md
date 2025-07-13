@@ -81,8 +81,8 @@ Categoría Principal
 
 1. **Clonar repositorio**:
 ```bash
-git clone https://github.com/tu-repositorio/bot-preguntas.git
-cd bot-preguntas
+git clone https://github.com/tu-repositorio/ot-PreguntasFrecuentes-ONTV-UNE.git
+cd Bot-PreguntasFrecuentes
 ```
 
 2. **Configurar entorno** (Linux/macOS):
