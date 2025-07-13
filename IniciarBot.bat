@@ -1,3 +1,3 @@
 call venv\Scripts\activate
-python "Bot-PreguntasFrecuentes\CodigoFuente\Bot.py"
+python "./Bot-PreguntasFrecuentes/Bot.py"
 pause
