@@ -2,8 +2,7 @@ import json
 import os
 from telebot import TeleBot, types
 
-# Configuración inicial
-ADMIN_IDS = [123456789]  # Reemplaza con tu ID de Telegram
+# Configuración de directorios
 MULTIMEDIA_DIR = "Bot-PreguntasFrecuentes/multimedia/"
 FAQ_FILE = "Bot-PreguntasFrecuentes/Datos/faq.json"
 
@@ -34,13 +33,17 @@ preguntas = cargar_preguntas()
 # COMANDOS PARA USUARIOS
 # --------------------------
 
-@bot.message_handler(commands=['start', 'help'])
+@bot.message_handler(commands=['start', 'help', 'preguntas'])
 def start(message):
     """Muestra las categorías disponibles"""
     markup = types.InlineKeyboardMarkup()
     
     if not preguntas['categorias']:
-        bot.send_message(message.chat.id, "ℹ️ No hay preguntas frecuentes disponibles todavía.")
+        bot.send_message(
+            message.chat.id, 
+            "ℹ️ No hay preguntas frecuentes disponibles todavía.\n\n"
+            "Por favor, contacta al administrador para agregar contenido."
+        )
         return
     
     for categoria in preguntas['categorias']:
@@ -74,7 +77,7 @@ def mostrar_preguntas(call):
             )
         )
     
-    markup.add(types.InlineKeyboardButton("🔙 Volver", callback_data="volver"))
+    markup.add(types.InlineKeyboardButton("🔙 Volver al inicio", callback_data="volver"))
     
     bot.edit_message_text(
         chat_id=call.message.chat.id,
@@ -137,158 +140,14 @@ def volver(call):
     """Maneja el botón de volver al inicio"""
     start(call.message)
 
-# --------------------------
-# COMANDOS PARA ADMINISTRADORES
-# --------------------------
-
-@bot.message_handler(commands=['agregar'])
-def agregar_pregunta(message):
-    """Inicia el proceso para agregar una nueva pregunta"""
-    if message.from_user.id not in ADMIN_IDS:
-        bot.reply_to(message, "⛔ No tienes permisos para este comando.")
-        return
-    
-    instrucciones = """
-📝 <b>Agregar nueva pregunta</b>
-
-Envía los datos en este formato:
-
-<b>Categoría:</b> Nombre de categoría (existente o nueva)
-<b>Pregunta:</b> ¿Tu pregunta aquí?
-<b>Respuesta:</b> La respuesta completa
-<b>Multimedia:</b> nombre_archivo.ext (opcional)
-
-<u>Ejemplo:</u>
-Categoría: Pagos
-Pregunta: ¿Cómo pagar?
-Respuesta: Puedes pagar con tarjeta o transferencia
-Multimedia: metodos-pago.jpg
-
-<u>Para enviar multimedia:</u>
-1. Sube el archivo a este chat
-2. Luego usa /agregar y escribe el nombre del archivo
-"""
-    msg = bot.reply_to(message, instrucciones, parse_mode='HTML')
-    bot.register_next_step_handler(msg, procesar_nueva_pregunta)
-
-def procesar_nueva_pregunta(message):
-    """Procesa los datos para una nueva pregunta"""
-    try:
-        # Si el usuario envió un archivo multimedia
-        if message.content_type in ['photo', 'video', 'document', 'audio']:
-            file_info = None
-            file_extension = ''
-            
-            if message.content_type == 'photo':
-                file_info = bot.get_file(message.photo[-1].file_id)
-                file_extension = '.jpg'
-            elif message.content_type == 'video':
-                file_info = bot.get_file(message.video.file_id)
-                file_extension = '.mp4'
-            elif message.content_type == 'document':
-                file_info = bot.get_file(message.document.file_id)
-                file_extension = os.path.splitext(message.document.file_name)[1]
-            elif message.content_type == 'audio':
-                file_info = bot.get_file(message.audio.file_id)
-                file_extension = '.mp3'
-            
-            if file_info:
-                downloaded_file = bot.download_file(file_info.file_path)
-                file_name = f"file_{message.message_id}{file_extension}"
-                file_path = os.path.join(MULTIMEDIA_DIR, file_name)
-                
-                with open(file_path, 'wb') as new_file:
-                    new_file.write(downloaded_file)
-                
-                bot.reply_to(
-                    message, 
-                    f"✅ Archivo guardado como: <code>{file_name}</code>\n\n"
-                    "Ahora envía los detalles de la pregunta en el formato indicado.",
-                    parse_mode='HTML'
-                )
-                return
-        
-        # Procesar texto con los datos de la pregunta
-        if message.content_type != 'text':
-            bot.reply_to(message, "❌ Por favor envía solo texto con el formato indicado.")
-            return
-        
-        lineas = [linea.strip() for linea in message.text.split('\n') if linea.strip()]
-        datos = {}
-        
-        for linea in lineas:
-            if linea.lower().startswith('categoría:') or linea.lower().startswith('categoria:'):
-                datos['categoria'] = linea.split(':', 1)[1].strip()
-            elif linea.lower().startswith('pregunta:'):
-                datos['pregunta'] = linea.split(':', 1)[1].strip()
-            elif linea.lower().startswith('respuesta:'):
-                datos['respuesta'] = linea.split(':', 1)[1].strip()
-            elif linea.lower().startswith('multimedia:'):
-                datos['multimedia'] = linea.split(':', 1)[1].strip()
-        
-        # Validar datos mínimos
-        if not all(k in datos for k in ['categoria', 'pregunta', 'respuesta']):
-            missing = [k for k in ['categoria', 'pregunta', 'respuesta'] if k not in datos]
-            bot.reply_to(message, f"❌ Faltan datos: {', '.join(missing)}")
-            return
-        
-        # Verificar si el archivo multimedia existe
-        if 'multimedia' in datos and datos['multimedia']:
-            if not os.path.exists(os.path.join(MULTIMEDIA_DIR, datos['multimedia'])):
-                bot.reply_to(
-                    message, 
-                    f"⚠️ El archivo '{datos['multimedia']}' no existe en {MULTIMEDIA_DIR}\n\n"
-                    "Sube el archivo primero o deja el campo Multimedia vacío."
-                )
-                return
-        
-        # Actualizar el JSON
-        with open(FAQ_FILE, 'r+', encoding='utf-8') as f:
-            data = json.load(f)
-            
-            # Buscar la categoría
-            categoria_existente = next(
-                (c for c in data['categorias'] if c['nombre'].lower() == datos['categoria'].lower()), 
-                None
-            )
-            
-            nueva_pregunta = {
-                'pregunta': datos['pregunta'],
-                'respuesta': datos['respuesta'],
-                'multimedia': datos.get('multimedia')
-            }
-            
-            if categoria_existente:
-                # Actualizar pregunta existente si ya está en la categoría
-                pregunta_existente = next(
-                    (p for p in categoria_existente['preguntas'] 
-                     if p['pregunta'].lower() == datos['pregunta'].lower()),
-                    None
-                )
-                
-                if pregunta_existente:
-                    pregunta_existente.update({
-                        'respuesta': datos['respuesta'],
-                        'multimedia': datos.get('multimedia', pregunta_existente.get('multimedia'))
-                    })
-                    bot.reply_to(message, "✅ Pregunta actualizada correctamente!")
-                else:
-                    categoria_existente['preguntas'].append(nueva_pregunta)
-                    bot.reply_to(message, "✅ Nueva pregunta agregada a la categoría existente!")
-            else:
-                data['categorias'].append({
-                    'nombre': datos['categoria'],
-                    'preguntas': [nueva_pregunta]
-                })
-                bot.reply_to(message, "✅ Nueva categoría y pregunta agregadas!")
-            
-            # Guardar cambios
-            f.seek(0)
-            json.dump(data, f, ensure_ascii=False, indent=2)
-            f.truncate()
-    
-    except Exception as e:
-        bot.reply_to(message, f"❌ Error al procesar: {str(e)}")
+@bot.message_handler(func=lambda message: True)
+def manejar_otros_mensajes(message):
+    """Responde a cualquier otro mensaje no reconocido"""
+    bot.reply_to(
+        message, 
+        "ℹ️ Usa el comando /start o /preguntas para ver las preguntas frecuentes.\n\n"
+        "Si necesitas ayuda adicional, por favor contacta al soporte técnico."
+    )
 
 # --------------------------
 # INICIAR EL BOT
@@ -296,4 +155,6 @@ def procesar_nueva_pregunta(message):
 
 if __name__ == '__main__':
     print("🤖 Bot de Preguntas Frecuentes iniciado...")
+    print(f"📂 Directorio multimedia: {MULTIMEDIA_DIR}")
+    print(f"📄 Archivo de preguntas: {FAQ_FILE}")
     bot.polling(none_stop=True)
