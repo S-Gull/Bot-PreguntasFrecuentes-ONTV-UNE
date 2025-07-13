@@ -1,0 +1,24 @@
+{
+  "categorias": [
+    {
+      "nombre": "General",
+      "preguntas": [
+        {
+          "pregunta": "¿Cómo me registro?",
+          "respuesta": "Visita nuestro sitio web y haz clic en Registrarse.",
+          "multimedia": "registro_guia.jpg"
+        }
+      ]
+    },
+    {
+      "nombre": "Pagos",
+      "preguntas": [
+        {
+          "pregunta": "¿Qué métodos de pago aceptan?",
+          "respuesta": "Aceptamos tarjetas, transferencias y PayPal.",
+          "multimedia": "horarios.jpg"
+        }
+      ]
+    }
+  ]
+}
