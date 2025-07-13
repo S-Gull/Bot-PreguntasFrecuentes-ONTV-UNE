@@ -1,78 +1,51 @@
-from Action import Action
-from Constants import ImgExtensions, VidExtensions, MEDIA_NONE, MEDIA_IMAGE, MEDIA_VIDEO, DataDirectory, ScriptLevel, NewLine, TabSpacing
+from Accion import Accion
+from Constantes import ExtensionesImagen, ExtensionesVideo, SIN_MEDIA, MEDIA_IMAGEN, MEDIA_VIDEO, DirectorioDatos, NivelScript, NuevaLinea, EspaciadoTabulador
 from telebot.types import InputMediaPhoto, InputMediaVideo
 
-class QandA(Action):
-    def __init__(self, question : str, answer : str, media : str) -> None:
-        super().__init__(question)
+class PreguntaRespuesta(Accion):
+    def __init__(self, pregunta: str, respuesta: str, multimedia: str) -> None:
+        super().__init__(pregunta)
+        self.Respuesta = respuesta
+        self.Multimedia = multimedia
+        self.TipoMultimedia = self.IdentificarTipoMultimedia(multimedia)
 
-        self.Answer = answer
-
-        # Media
-        self.Media = media
-        self.MediaType = self.IdentifyMedia(media)
-
-
-    def DisplayMessage(self):
-        if self.MediaType == MEDIA_NONE:
-            return self.Answer
+    def MostrarMensaje(self):
+        if self.TipoMultimedia == SIN_MEDIA:
+            return self.Respuesta
         else:
-            media = open(DataDirectory + self.Media, "rb")
-            if self.MediaType == MEDIA_IMAGE:
-                return InputMediaPhoto(media, self.Answer)
-            elif self.MediaType == MEDIA_VIDEO:
-                return InputMediaVideo(media, self.Answer)
+            media = open(DirectorioDatos + self.Multimedia, "rb")
+            if self.TipoMultimedia == MEDIA_IMAGEN:
+                return InputMediaPhoto(media, self.Respuesta)
+            elif self.TipoMultimedia == MEDIA_VIDEO:
+                return InputMediaVideo(media, self.Respuesta)
 
+    def Seleccionado(self, callback: str, estado):
+        return self.MostrarMensaje()
 
-    # Render the feedback when selected
-    def Selected(self, callback : str, state):
-        return self.DisplayMessage()
+    def AString(self, nivel) -> str:
+        resultado = (NivelScript * nivel) + NuevaLinea
+        espacioUnTabuladorMenos = EspaciadoTabulador * (nivel - 1)
+        resultado += espacioUnTabuladorMenos + "{" + NuevaLinea
 
-    
-    def ToString(self, level) -> str:
-        # Level
-        result = (ScriptLevel * level) + NewLine
+        espacioTabulador = EspaciadoTabulador * nivel
+        resultado += espacioTabulador + "\"Pregunta\" : \"" + self.Nombre + "\"," + NuevaLinea
+        resultado += espacioTabulador + "\"Respuesta\" : \"" + self.Respuesta + "\""
 
-        # Open curly braces
-        oneLessTabSpace = TabSpacing * (level - 1)
-        result += oneLessTabSpace + "{" + NewLine
+        if self.TipoMultimedia != SIN_MEDIA:
+            resultado += ("," + NuevaLinea)
+            resultado += espacioTabulador + "\"Multimedia\" : \"" + self.Multimedia + "\""
+        resultado += NuevaLinea
+        resultado += espacioUnTabuladorMenos + "}" + NuevaLinea
+        return resultado
 
-        # Question
-        tabSpace = TabSpacing * level
-        result += tabSpace + "\"Question\" : \"" + self.Name + "\"," + NewLine
+    def IdentificarTipoMultimedia(self, multimedia: str) -> int:
+        if not multimedia or len(multimedia) <= 0:
+            return SIN_MEDIA
 
-        # Answer
-        result += tabSpace + "\"Answer\" : \"" + self.Answer + "\""
+        division = multimedia.split(".")
+        if len(division) > 1:
+            ext = "." + division[-1]
+            if ext in ExtensionesImagen: return MEDIA_IMAGEN
+            if ext in ExtensionesVideo: return MEDIA_VIDEO
 
-        # Media
-        if self.MediaType != MEDIA_NONE:
-            # Add comma and new line
-            result += ("," + NewLine)
-            result += tabSpace + "\"Media\" : \"" + self.Media + "\""
-        result += NewLine
-
-        # Close curly braces
-        result += oneLessTabSpace + "}" + NewLine
-
-        return result
-
-
-    def IdentifyMedia(self, media : str) -> int:
-        # Check if media is specified
-        if not media or len(media) <= 0:
-            return MEDIA_NONE
-
-        # Get media ext
-        split = media.split(".")
-        if len(split) > 1:
-            ext = "." + split[len(split) - 1]
-
-            # Check if media is image
-            if ext in ImgExtensions:
-                return MEDIA_IMAGE
-
-            if ext in VidExtensions:
-                return MEDIA_VIDEO
-
-        # No media type found
-        return MEDIA_NONE
+        return SIN_MEDIA
