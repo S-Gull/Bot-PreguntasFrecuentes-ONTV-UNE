@@ -1,7 +1,7 @@
-﻿FAQ Telegram Bot/.vscode
+﻿Bot-PreguntasFrecuentes/.vscode
 venv
-FAQ Telegram Bot/__pycache__
-#TODO FAQ Telegram Bot/Datos/Credentials.json 
-FAQ Telegram Bot/Datos/**/*.png
-FAQ Telegram Bot/Datos/**/*.jpg
+Bot-PreguntasFrecuentes/__pycache__
+#TODO Bot-PreguntasFrecuentes/Datos/Credentials.json 
+Bot-PreguntasFrecuentes/Datos/**/*.png
+Bot-PreguntasFrecuentes/Datos/**/*.jpg
 .vscode
