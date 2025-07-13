@@ -25,17 +25,17 @@ instalar_dependencias() {
     echo -e "${YELLOW}Instalando dependencias para ${distro}...${NC}"
     
     case $distro in
-        arch|manjaro|endeavouros)
+        (arch|manjaro|endeavouros)
             sudo pacman -Sy --noconfirm python python-pip python-virtualenv
             ;;
-        debian|ubuntu|pop|linuxmint)
+        (debian|ubuntu|pop|linuxmint)
             sudo apt-get update
             sudo apt-get install -y python3 python3-pip python3-venv
             ;;
-        fedora|centos|rhel)
+        (fedora|centos|rhel)
             sudo dnf install -y python3 python3-pip python3-virtualenv
             ;;
-        *)
+        (*)
             echo -e "${RED}Distribución no soportada. Instala manualmente:${NC}"
             echo "- python3"
             echo "- python3-pip"
