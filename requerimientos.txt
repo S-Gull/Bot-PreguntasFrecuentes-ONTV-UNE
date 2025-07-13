@@ -1,6 +1,7 @@
-certifi>=2020.12.5
-chardet>=4.0.0
-idna>=2.10
-pyTelegramBotAPI>=3.7.5
-requests>=2.25.1
-urllib3>=1.26.2
+# requerimientos.txt
+certifi>=2023.7.22       # Actualización segura (solo certificados SSL)
+chardet>=5.1.0           # Compatible con versiones anteriores
+idna>=3.4                # Mantiene compatibilidad con IDNA 2008
+pyTelegramBotAPI>=4.12.0 # Versión estable con retrocompatibilidad
+requests>=2.31.0         # LTS con soporte extendido
+urllib3>=2.0.4           # Versión mantenida con modo legacy

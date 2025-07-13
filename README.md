@@ -20,7 +20,7 @@ Este bot permite organizar y responder preguntas frecuentes mediante un menú in
 ### 3. Características técnicas
 - Desarrollado en Python con `pyTelegramBotAPI`
 - Datos almacenados en formato JSON
-- Multimedia almacenada en local (`/img`)
+- Multimedia almacenada en local (`/multimedia`)
 - Soporte multiplataforma
 
 ## 📝 Cómo Agregar Preguntas
@@ -47,7 +47,7 @@ Este bot permite organizar y responder preguntas frecuentes mediante un menú in
 ```
 
 ### Para multimedia:
-1. Subir archivos a `Bot-PreguntasFrecuentes/img/`
+1. Subir archivos a `Bot-PreguntasFrecuentes/multimedia/`
 2. Referenciarlos en el campo "multimedia"
 
 ## ⚙️ Cómo Funcionan las Preguntas
@@ -116,7 +116,7 @@ bot-preguntas/
 │   ├── Datos/
 │   │   ├── Credentials.json
 │   │   └── faq.json
-│   └── img/          # Multimedia
+│   └── multimedia/          # Multimedia
 ├── ConfigurarEntorno.sh
 ├── IniciarBot.sh
 ├── requerimientos.txt
@@ -131,7 +131,7 @@ bot-preguntas/
    - Obtener nuevo token con @BotFather si es necesario
 
 2. **Multimedia no aparece**:
-   - Verificar que el archivo existe en `/img`
+   - Verificar que el archivo existe en `/multimedia`
    - Comprobar nombre y extensión en faq.json
 
 3. **Error al iniciar**:
