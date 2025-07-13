@@ -1,123 +1,145 @@
-# 🤖 Bot de Preguntas Frecuentes para Telegram
+# 📚 Bot de Preguntas Frecuentes para Telegram
 
-![Banner](https://via.placeholder.com/800x200.png?text=Bot+FAQ+Telegram) *(Reemplazar con imagen real)*
+## 🤖 Descripción
+Este bot permite organizar y responder preguntas frecuentes mediante un menú interactivo en Telegram, con soporte para categorías, subpreguntas y multimedia (imágenes, videos, documentos).
 
-Un bot **fácil de configurar** para responder automáticamente preguntas frecuentes en Telegram. Ideal para negocios pequeños, comunidades o servicios que necesitan brindar información rápida.
+## 🛠️ Funcionamiento del Bot
 
-## 🔍 Índice
-- [Características](#-características)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Configuración Inicial](#-configuración-inicial)
-- [Uso del Bot](#-uso-del-bot)
-- [Formato del FAQ.script](#-formato-del-faqscript)
-- [Preguntas Frecuentes](#-preguntas-frecuentes)
-- [Contribución](#-contribución)
-- [Licencia](#-licencia)
+### 1. Estructura básica
+- **Categorías**: Agrupan preguntas relacionadas (ej: "Pagos", "Soporte Técnico")
+- **Preguntas**: Cada una con su respuesta correspondiente
+- **Multimedia**: Opcionalmente puede incluir imágenes/videos/documentos
 
-## ✨ Características
+### 2. Flujo de interacción
+1. Usuario envía `/start` o `/preguntas`
+2. Bot muestra lista de categorías disponibles
+3. Usuario selecciona categoría → ve lista de preguntas
+4. Usuario selecciona pregunta → recibe respuesta
+5. Bot ofrece opción de volver atrás o al inicio
 
-| Función | Descripción |
-|---------|-------------|
-| 📂 Menú jerárquico | Organiza preguntas en categorías y subcategorías |
-| 🖼️ Multimedia | Soporta imágenes (.jpg, .png) y videos (.mp4) |
-| 🔙 Navegación | Botón "Atrás" para retroceder en el menú |
-| 📝 Editor simple | Configuración mediante archivos de texto |
-| ☁️ Auto-hospedaje | Funciona en cualquier PC o servidor |
+### 3. Características técnicas
+- Desarrollado en Python con `pyTelegramBotAPI`
+- Datos almacenados en formato JSON
+- Multimedia almacenada en local (`/img`)
+- Soporte multiplataforma
 
-## 📂 Estructura del Proyecto
+## 📝 Cómo Agregar Preguntas
 
-```plaintext
-Bot-PreguntasFrecuentes/
-├── 📜 IniciarBot.bat          - Script para lanzar el bot
-├── ⚙️ ConfigurarEntorno.bat   - Instalador automático
-├── 📝 requerimientos.txt      - Dependencias necesarias
-│
-├── 📂 CodigoFuente/           - Código principal
-│   ├── 🤖 Bot.py              - Lógica del bot
-│   ├── 📁 Categoria.py        - Manejo de menús
-│   └── ...                   - Otros módulos
-│
-└── 📂 Datos/                  *No modificar nombre*
-    ├── 🔑 Credentials.json    - Token del bot
-    └── 📜 FAQ.script         - Base de conocimiento
+### Método manual (recomendado):
+1. Editar el archivo `Bot-PreguntasFrecuentes/Datos/faq.json`
+2. Seguir esta estructura:
+
+```json
+{
+  "categorias": [
+    {
+      "nombre": "Nombre Categoría",
+      "preguntas": [
+        {
+          "pregunta": "Texto de la pregunta",
+          "respuesta": "Texto de la respuesta",
+          "multimedia": "nombre_archivo.ext"  // Opcional
+        }
+      ]
+    }
+  ]
+}
 ```
-## 🛠️ Configuración Inicial
 
-### 1. Requisitos Previos
-Antes de comenzar, necesitarás:
+### Para multimedia:
+1. Subir archivos a `Bot-PreguntasFrecuentes/img/`
+2. Referenciarlos en el campo "multimedia"
 
-- [Python 3.8 o superior](https://www.python.org/downloads/)  
-  *(Marca la opción "Add Python to PATH" durante la instalación)*
-  
-- Un bot de Telegram:  
-  1. Busca [@BotFather](https://t.me/BotFather) en Telegram  
-  2. Envía `/newbot` y sigue las instrucciones  
-  3. Al final, recibirás un **token** (guárdalo seguro)
+## ⚙️ Cómo Funcionan las Preguntas
 
-### 2. Instalación Paso a Paso
+### Jerarquía:
+```
+Categoría Principal
+├── Pregunta 1 (respuesta directa)
+├── Pregunta 2 (con imagen)
+└── Subcategoría
+    ├── Pregunta A
+    └── Pregunta B
+```
 
-1. **Descargar el proyecto**:
-   ```bash
-   git clone https://github.com/tu-usuario/Bot-PreguntasFrecuentes.git
-   cd Bot-PreguntasFrecuentes
-    ```
+### Tipos de respuestas:
+1. **Texto simple**: Solo respuesta escrita
+2. **Con multimedia**: 
+   - Imágenes (JPEG, PNG)
+   - Videos (MP4)
+   - Documentos (PDF)
+   - Audio (MP3)
 
-2. **Editar Datos/`Credentials.json`:**:
-    ```json
-    {"token": "TU_TOKEN_AQUI"}  
-    ```
+## 💻 Instalación en Cualquier Equipo
 
-3. **Ejecutar `ConfigurarEntorno.bat` (Windows) o:**
-    ```bash
-    pip install -r requerimientos.txt
-    ```
-## 🚀 Uso del Bot
-1. *Iniciar el bot:*
+### Requisitos:
+- Python 3.8+
+- Pip
+- Git (opcional)
 
- - Doble clic en IniciarBot.bat o:
+### Pasos:
 
-    ```bash
-    python CodigoFuente/Bot.py
-    ```
-    - Interactuar:
-    ```text
-        /start - Muestra el menú principal
-    ```
-    - Flujo típico:
+1. **Clonar repositorio**:
+```bash
+git clone https://github.com/tu-repositorio/bot-preguntas.git
+cd bot-preguntas
+```
 
-    ```text
-    Usuario: /start
-    Bot: "¿En qué puedo ayudarte?" (con botones)
-    → Usuario selecciona categoría
-    → Bot muestra preguntas disponibles
-    → Usuario elige pregunta
-    → Bot responde (texto/imagen/video)
-    ```
-## 📝 Formato del FAQ.script
-####   Ejemplo básico:
+2. **Configurar entorno** (Linux/macOS):
+```bash
+chmod +x ConfigurarEntorno.sh
+./ConfigurarEntorno.sh
+```
 
-    -
-    {
-      "Nombre": "Principal",
-      "Mensaje": "Elige una opción:"
-    }
-    -
-    {
-      "Pregunta": "Horario",
-      "Respuesta": "Abierto de 9am a 6pm"
-    }
-    
+3. **Configurar entorno** (Windows):
+```bat
+ConfigurarEntorno.bat
+```
 
-####    Ejemplo avanzado:
-    -
-    {
-      "Nombre": "Soporte",
-      "Mensaje": "Problemas técnicos:"
-    }
-    --
-    {
-      "Pregunta": "Error 404",
-      "Respuesta": "Reinicie la aplicación",
-      "Multimedia": "solucion_error.jpg"
-    }
-    
+4. **Editar configuración**:
+- Agregar tu token de bot en `Bot-PreguntasFrecuentes/Datos/Credentials.json`
+- Configurar preguntas en `faq.json`
+
+5. **Iniciar el bot**:
+```bash
+# Linux/macOS
+./IniciarBot.sh
+
+# Windows
+IniciarBot.bat
+```
+
+## 📂 Estructura de Archivos
+```
+bot-preguntas/
+├── Bot-PreguntasFrecuentes/
+│   ├── Datos/
+│   │   ├── Credentials.json
+│   │   └── faq.json
+│   └── img/          # Multimedia
+├── ConfigurarEntorno.sh
+├── IniciarBot.sh
+├── requerimientos.txt
+└── README.md
+```
+
+## 🚨 Solución de Problemas
+
+### Problemas comunes:
+1. **Token no válido**:
+   - Verificar que el token en Credentials.json sea correcto
+   - Obtener nuevo token con @BotFather si es necesario
+
+2. **Multimedia no aparece**:
+   - Verificar que el archivo existe en `/img`
+   - Comprobar nombre y extensión en faq.json
+
+3. **Error al iniciar**:
+   - Asegurarse que todas las dependencias están instaladas
+   - Verificar que Python 3.8+ está instalado
+
+
+
+---
+
+💡 **Sugerencia**: Para mantener actualizado el bot, sincroniza periódicamente las preguntas desde tu repositorio Git.
