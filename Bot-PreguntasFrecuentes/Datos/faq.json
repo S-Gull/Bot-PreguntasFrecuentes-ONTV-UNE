@@ -11,7 +11,7 @@
         },
         {
           "pregunta": "¿Qué órganos y tejidos se pueden donar?",
-          "respuesta": "---",
+          "respuesta": "Se pueden donar: órganos (riñones, hígado, corazón, pulmones, páncreas e intestinos) y tejidos (córneas, hueso, piel, válvulas cardíacas, tendones y cartílagos). Un solo donante puede salvar hasta 8 vidas.",
           "multimedia": ""
         },
         {
@@ -31,12 +31,12 @@
         },
         {
           "pregunta": "¿Cuánto cuesta un trasplante en Venezuela?",
-          "respuesta": "---",
+          "respuesta": "Los trasplantes son gratuitos en hospitales públicos venezolanos. La ONTV cubre los costos quirúrgicos mediante el Sistema Público Nacional de Salud, según la Ley de Donación y Trasplante de Órganos.",
           "multimedia": ""
         },
         {
           "pregunta": "¿Existe rechazo a órganos donados?",
-          "respuesta": "---",
+          "respuesta": "Sí, pero se controla con medicamentos inmunosupresores. Los pacientes requieren tratamiento permanente y seguimiento médico para minimizar riesgos de rechazo, con altas tasas de éxito en trasplantes renales y hepáticos.",
           "multimedia": ""
         }
       ]
@@ -66,7 +66,7 @@
         },
         {
           "pregunta": "¿Los médicos no hacen todo lo posible por salvar a un paciente si es donante?",
-          "respuesta": "---",
+          "respuesta": "MITO. El equipo médico tratante es independiente del equipo de trasplantes. Solo después de confirmar la muerte cerebral por protocolos establecidos y obtener autorización familiar, se activa el proceso de donación.",
           "multimedia": ""
         }
       ]
