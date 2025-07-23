@@ -1,22 +1,73 @@
 {
+  "bienvenida": "🌟 ¡Bienvenido al bot de la ONTV (Organización Nacional de Trasplantes de Venezuela)! 🌟\n\nAquí encontrarás información verificada sobre donación y trasplantes. Usa /start para comenzar.",
   "categorias": [
     {
-      "nombre": "General",
+      "nombre": "Donación de Órganos",
       "preguntas": [
         {
-          "pregunta": "¿Cómo me registro?",
-          "respuesta": "Visita nuestro sitio web y haz clic en Registrarse.",
-          "multimedia": "registro_guia.jpg"
+          "pregunta": "¿Quién puede ser donante de órganos?",
+          "respuesta": "En Venezuela, cualquier persona mayor de 18 años puede manifestar su voluntad de ser donante. Para menores de edad, se requiere consentimiento de los padres o representantes legales.",
+          "multimedia": ""
+        },
+        {
+          "pregunta": "¿Qué órganos y tejidos se pueden donar?",
+          "respuesta": "---",
+          "multimedia": ""
+        },
+        {
+          "pregunta": "¿La donación afecta los ritos funerarios?",
+          "respuesta": "No. La extracción de órganos se realiza con técnicas quirúrgicas profesionales que no alteran la apariencia física del donante, permitiendo velatorios normales.",
+          "multimedia": ""
         }
       ]
     },
     {
-      "nombre": "Pagos",
+      "nombre": "Proceso de Trasplante",
       "preguntas": [
         {
-          "pregunta": "¿Qué métodos de pago aceptan?",
-          "respuesta": "Aceptamos tarjetas, transferencias y PayPal.",
-          "multimedia": "horarios.jpg"
+          "pregunta": "¿Cómo se asigna un órgano para trasplante?",
+          "respuesta": "Los órganos se asignan según criterios médicos (compatibilidad, urgencia, tiempo en lista de espera) mediante un sistema nacional transparente supervisado por la ONTV.",
+          "multimedia": ""
+        },
+        {
+          "pregunta": "¿Cuánto cuesta un trasplante en Venezuela?",
+          "respuesta": "---",
+          "multimedia": ""
+        },
+        {
+          "pregunta": "¿Existe rechazo a órganos donados?",
+          "respuesta": "---",
+          "multimedia": ""
+        }
+      ]
+    },
+    {
+      "nombre": "Registro y Legalidad",
+      "preguntas": [
+        {
+          "pregunta": "¿Dónde me registro como donante?",
+          "respuesta": "Puedes registrar tu voluntad en:\n1. La sede de la ONTV\n2. Hospitales autorizados\n3. A través del portal web oficial (indicar URL)",
+          "multimedia": "formulario_donacion.jpg"
+        },
+        {
+          "pregunta": "¿Puedo cambiar de opinión después de registrarme?",
+          "respuesta": "Sí, el consentimiento para donación es revocable en cualquier momento mediante un trámite administrativo.",
+          "multimedia": ""
+        }
+      ]
+    },
+    {
+      "nombre": "Mitos y Verdades",
+      "preguntas": [
+        {
+          "pregunta": "¿Es cierto que venden los órganos de donantes?",
+          "respuesta": "FALSO. En Venezuela la compra-venta de órganos es un delito penal. La ONTV garantiza un sistema ético y equitativo.",
+          "multimedia": ""
+        },
+        {
+          "pregunta": "¿Los médicos no hacen todo lo posible por salvar a un paciente si es donante?",
+          "respuesta": "---",
+          "multimedia": ""
         }
       ]
     }

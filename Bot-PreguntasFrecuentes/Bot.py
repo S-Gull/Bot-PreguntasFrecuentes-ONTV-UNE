@@ -36,6 +36,13 @@ preguntas = cargar_preguntas()
 @bot.message_handler(commands=['start', 'help', 'preguntas'])
 def start(message):
     """Muestra las categorías disponibles"""
+    # Mensaje de bienvenida personalizado
+    welcome_msg = (
+        "🌟 <b>¡Bienvenido al bot de la ONTV (Organización Nacional de Trasplantes de Venezuela)!</b> 🌟\n\n"
+        "Aquí encontrarás información importante sobre donación y trasplantes.\n\n"
+        "Selecciona una categoría:"
+    )
+    
     markup = types.InlineKeyboardMarkup()
     
     if not preguntas['categorias']:
@@ -56,11 +63,11 @@ def start(message):
     
     bot.send_message(
         message.chat.id, 
-        "📚 <b>Preguntas Frecuentes</b>\n\nSelecciona una categoría:", 
+        welcome_msg, 
         reply_markup=markup,
         parse_mode='HTML'
     )
-
+    
 @bot.callback_query_handler(func=lambda call: call.data.startswith('categoria_'))
 def mostrar_preguntas(call):
     """Muestra las preguntas de una categoría específica"""
