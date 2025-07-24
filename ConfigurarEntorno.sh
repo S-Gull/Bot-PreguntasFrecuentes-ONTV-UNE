@@ -92,7 +92,7 @@ configurar_token() {
 EOF
     
     # Crear estructura de directorios
-    mkdir -p "Bot-PreguntasFrecuentes/img"
+    mkdir -p "Bot-PreguntasFrecuentes/multimedia"
     touch "Bot-PreguntasFrecuentes/Datos/faq.json"
     
     echo -e "${GREEN}¡Token configurado correctamente!${NC}"

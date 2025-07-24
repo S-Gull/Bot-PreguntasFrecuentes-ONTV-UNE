@@ -63,10 +63,10 @@ def setup_handlers():
     def add_question_handler(message):
         msg = config.bot_instance.send_message(
             message.chat.id,
-            "📝 <b>Agregar Nueva Pregunta</b>\n\nEnvía los datos en este formato...",
+            "📝 <b>Agregar Nueva Pregunta</b>\n\nEnvia a continuacion la pregunta:",
             parse_mode='HTML'
         )
-        config.bot_instance.register_next_step_handler(msg, procesar_nueva_pregunta)
+        config.bot_instance.register_next_step_handler(msg, procesar_pregunta)
     
     @config.bot_instance.message_handler(func=lambda m: m.text == "📋 Listar Preguntas" and es_admin(m.from_user.id))
     def list_questions_handler(message):

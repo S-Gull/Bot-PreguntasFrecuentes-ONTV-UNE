@@ -51,7 +51,7 @@ main() {
     echo
 
     # Activar entorno y ejecutar bot
-    source venv/bin/activate && python3 Bot-PreguntasFrecuentes/Bot.py
+    source venv/bin/activate && python3 Bot-PreguntasFrecuentes/bot.py
 
     # Manejar estado de salida
     if [ $? -ne 0 ]; then

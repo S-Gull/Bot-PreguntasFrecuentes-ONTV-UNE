@@ -37,7 +37,7 @@ echo [REGISTRO DEL BOT]
 echo ----------------------------------------------------
 echo.
 
-call venv\Scripts\activate && python Bot-PreguntasFrecuentes/Bot.py
+call venv\Scripts\activate && python Bot-PreguntasFrecuentes/bot.py
 
 if errorlevel 1 (
     echo.
