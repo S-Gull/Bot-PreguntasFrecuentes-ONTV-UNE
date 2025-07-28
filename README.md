@@ -1,145 +1,173 @@
-# 📚 Bot de Preguntas Frecuentes para Telegram
+# **Guía Paso a Paso para Usar el Bot de Preguntas Frecuentes ONTV**  
 
-## 🤖 Descripción
-Este bot permite organizar y responder preguntas frecuentes mediante un menú interactivo en Telegram, con soporte para categorías, subpreguntas y multimedia (imágenes, videos, documentos).
-
-## 🛠️ Funcionamiento del Bot
-
-### 1. Estructura básica
-- **Categorías**: Agrupan preguntas relacionadas (ej: "Pagos", "Soporte Técnico")
-- **Preguntas**: Cada una con su respuesta correspondiente
-- **Multimedia**: Opcionalmente puede incluir imágenes/videos/documentos
-
-### 2. Flujo de interacción
-1. Usuario envía `/start` o `/preguntas`
-2. Bot muestra lista de categorías disponibles
-3. Usuario selecciona categoría → ve lista de preguntas
-4. Usuario selecciona pregunta → recibe respuesta
-5. Bot ofrece opción de volver atrás o al inicio
-
-### 3. Características técnicas
-- Desarrollado en Python con `pyTelegramBotAPI`
-- Datos almacenados en formato JSON
-- Multimedia almacenada en local (`/multimedia`)
-- Soporte multiplataforma
-
-## 📝 Cómo Agregar Preguntas
-
-### Método manual (recomendado):
-1. Editar el archivo `Bot-PreguntasFrecuentes/Datos/faq.json`
-2. Seguir esta estructura:
-
-```json
-{
-  "categorias": [
-    {
-      "nombre": "Nombre Categoría",
-      "preguntas": [
-        {
-          "pregunta": "Texto de la pregunta",
-          "respuesta": "Texto de la respuesta",
-          "multimedia": "nombre_archivo.ext"  // Opcional
-        }
-      ]
-    }
-  ]
-}
-```
-
-### Para multimedia:
-1. Subir archivos a `Bot-PreguntasFrecuentes/multimedia/`
-2. Referenciarlos en el campo "multimedia"
-
-## ⚙️ Cómo Funcionan las Preguntas
-
-### Jerarquía:
-```
-Categoría Principal
-├── Pregunta 1 (respuesta directa)
-├── Pregunta 2 (con imagen)
-└── Subcategoría
-    ├── Pregunta A
-    └── Pregunta B
-```
-
-### Tipos de respuestas:
-1. **Texto simple**: Solo respuesta escrita
-2. **Con multimedia**: 
-   - Imágenes (JPEG, PNG)
-   - Videos (MP4)
-   - Documentos (PDF)
-   - Audio (MP3)
-
-## 💻 Instalación en Cualquier Equipo
-
-### Requisitos:
-- Python 3.8+
-- Pip
-- Git (opcional)
-
-### Pasos:
-
-1. **Clonar repositorio**:
-```bash
-git clone https://github.com/tu-repositorio/ot-PreguntasFrecuentes-ONTV-UNE.git
-cd Bot-PreguntasFrecuentes
-```
-
-2. **Configurar entorno** (Linux/macOS):
-```bash
-chmod +x ConfigurarEntorno.sh
-./ConfigurarEntorno.sh
-```
-
-3. **Configurar entorno** (Windows):
-```bat
-ConfigurarEntorno.bat
-```
-
-4. **Editar configuración**:
-- Agregar tu token de bot en `Bot-PreguntasFrecuentes/Datos/Credentials.json`
-- Configurar preguntas en `faq.json`
-
-5. **Iniciar el bot**:
-```bash
-# Linux/macOS
-./IniciarBot.sh
-
-# Windows
-IniciarBot.bat
-```
-
-## 📂 Estructura de Archivos
-```
-bot-preguntas/
-├── Bot-PreguntasFrecuentes/
-│   ├── Datos/
-│   │   ├── Credentials.json
-│   │   └── faq.json
-│   └── multimedia/          # Multimedia
-├── ConfigurarEntorno.sh
-├── IniciarBot.sh
-├── requerimientos.txt
-└── README.md
-```
-
-## 🚨 Solución de Problemas
-
-### Problemas comunes:
-1. **Token no válido**:
-   - Verificar que el token en Credentials.json sea correcto
-   - Obtener nuevo token con @BotFather si es necesario
-
-2. **Multimedia no aparece**:
-   - Verificar que el archivo existe en `/multimedia`
-   - Comprobar nombre y extensión en faq.json
-
-3. **Error al iniciar**:
-   - Asegurarse que todas las dependencias están instaladas
-   - Verificar que Python 3.8+ está instalado
-
-
+Esta guía explica cómo configurar, administrar y usar el bot de preguntas frecuentes para la **Organización Nacional de Trasplantes de Venezuela (ONTV)**.  
 
 ---
 
-💡 **Sugerencia**: Para mantener actualizado el bot, sincroniza periódicamente las preguntas desde tu repositorio Git.
+## **📌 1. Configuración Inicial**  
+Antes de usar el bot, debes configurar el entorno.  
+
+### **🔹 Paso 1: Ejecutar el Script de Configuración**  
+1. Abre una terminal (`CMD` o `PowerShell` en Windows).  
+2. Navega hasta la carpeta del proyecto.  
+3. Ejecuta:  
+   ```bash
+   ConfigurarEntorno.bat
+   ```  
+4. El script te pedirá el **token de Telegram** (obtén uno con [@BotFather](https://t.me/BotFather)).  
+5. Se instalará todo automáticamente.  
+
+✅ **Ejemplo de salida:**  
+```
+********************************************
+* CONFIGURACION DEL TOKEN DE TELEGRAM *
+********************************************
+Por favor ingrese el token de su bot de Telegram: 8118750964:AAHfYr7NqtJWqYgqbmEYdocXQuSw8Fwy7Ok
+¡Configuración completada con éxito!
+```  
+
+---
+
+## **🤖 2. Iniciar el Bot**  
+Una vez configurado, ejecuta:  
+```bash
+IniciarBot.bat
+```  
+El bot estará en línea y responderá a comandos en Telegram.  
+
+✅ **Ejemplo de inicio:**  
+```
+🤖 Bot de Preguntas Frecuentes iniciado...
+📂 Directorio multimedia: ./Bot-PreguntasFrecuentes/multimedia
+📄 Archivo de preguntas: ./Bot-PreguntasFrecuentes/Datos/faq.json
+```  
+
+---
+
+## **👤 3. Uso Básico para Usuarios**  
+Los usuarios pueden interactuar con el bot usando estos comandos:  
+
+| **Comando** | **Descripción** | **Ejemplo** |
+|------------|----------------|-------------|
+| `/start` o `/help` | Muestra el menú principal | `/start` |
+| `/preguntas` | Lista las categorías de preguntas | `/preguntas` |
+| `/id` | Muestra tu ID de usuario (útil para admins) | `/id` |
+
+✅ **Flujo de ejemplo:**  
+1. El usuario escribe `/start`.  
+2. El bot muestra:  
+   ```
+   🌟 ¡Bienvenido! 🌟  
+   Selecciona una categoría:  
+   - Donación de Órganos  
+   - Proceso de Trasplante  
+   - Registro y Legalidad  
+   - Mitos y Verdades  
+   ```  
+3. El usuario selecciona una categoría y luego una pregunta.  
+4. El bot responde con la información.  
+
+---
+
+## **👑 4. Panel de Administración (Solo para Admins)**  
+Los administradores pueden gestionar preguntas y administradores.  
+
+### **🔹 Acceso al Panel Admin**  
+1. Ejecuta `/start` o escribe `📚 Preguntas` / `👑 Administradores`.  
+2. Si tu ID está en `ADMIN_IDS` (en `config.py`), verás el menú de administración.  
+
+✅ **Ejemplo:**  
+```
+🔧 Panel de Administración  
+Selecciona una opción:  
+📚 Preguntas  
+👑 Administradores  
+```  
+
+---
+
+### **📝 Gestión de Preguntas**  
+| **Opción** | **Descripción** | **Ejemplo** |
+|------------|----------------|-------------|
+| `📝 Agregar Pregunta` | Añade una nueva pregunta | Pregunta: *"¿Puedo ser donante si tengo diabetes?"* Respuesta: *"Sí, pero depende del tipo..."* |
+| `📋 Listar Preguntas` | Muestra todas las preguntas | Lista todas las categorías y preguntas |
+| `🗑️ Eliminar Pregunta` | Borra una pregunta existente | Eliminar: *"¿La donación afecta los ritos funerarios?"* |
+
+✅ **Flujo para agregar una pregunta:**  
+1. Selecciona `📝 Agregar Pregunta`.  
+2. Escribe la pregunta:  
+   ```
+   ✏️ Agregar nueva pregunta  
+   Por favor escribe la pregunta:  
+   ¿Puedo donar si tengo VIH?  
+   ```  
+3. Escribe la respuesta:  
+   ```
+   📝 Ahora escribe la respuesta para esta pregunta:  
+   No, por razones de seguridad médica...  
+   ```  
+4. El bot pregunta si quieres agregar multimedia (opcional).  
+5. Selecciona una categoría o crea una nueva.  
+6. ¡Listo! La pregunta ya está disponible.  
+
+---
+
+### **👥 Gestión de Administradores**  
+| **Opción** | **Descripción** | **Ejemplo** |
+|------------|----------------|-------------|
+| `➕ Agregar Admin` | Añade un nuevo admin | ID: `123456789` → Ahora es admin |
+| `➖ Eliminar Admin` | Elimina un admin | Eliminar: `123456789` |
+
+✅ **Flujo para agregar un admin:**  
+1. Selecciona `👑 Administradores` → `➕ Agregar Admin`.  
+2. Ingresa el ID del usuario (obtenlo con `/id`).  
+3. El bot confirma:  
+   ```
+   ✅ Usuario 123456789 añadido como administrador.  
+   ```  
+
+---
+
+## **📌 5. Ejemplo de Uso Completo**  
+**Caso:** Un usuario quiere saber sobre donación y trasplantes.  
+
+1. **Usuario escribe:** `/start`  
+2. **Bot responde:**  
+   ```
+   🌟 ¡Bienvenido! 🌟  
+   Selecciona una categoría:  
+   - Donación de Órganos  
+   - Proceso de Trasplante  
+   ```  
+3. **Usuario selecciona:** `Donación de Órganos`  
+4. **Bot muestra preguntas:**  
+   ```
+   ❓ Donación de Órganos  
+   - ¿Quién puede ser donante?  
+   - ¿Qué órganos se pueden donar?  
+   ```  
+5. **Usuario elige:** `¿Qué órganos se pueden donar?`  
+6. **Bot responde:**  
+   ```
+   Se pueden donar: riñones, hígado, corazón...  
+   Un solo donante puede salvar hasta 8 vidas.  
+   ```  
+
+---
+
+## **⚠️ 6. Posibles Errores y Soluciones**  
+| **Error** | **Solución** |
+|-----------|--------------|
+| *"Token no configurado"* | Editar `Credentials.json` con el token correcto |
+| *"No hay preguntas disponibles"* | Usar el panel admin para agregar preguntas |
+| *"No tengo permisos de admin"* | Asegurarse de que tu ID esté en `ADMIN_IDS` |
+
+---
+
+## **✅ Conclusión**  
+Este bot permite:  
+✔ Acceso rápido a información sobre donación de órganos.  
+✔ Panel de administración para gestionar contenido.  
+✔ Soporte para multimedia (imágenes, videos).  
+
+**📢 ¿Listo para usarlo?** Ejecuta `IniciarBot.bat` y comienza a interactuar. 🚀
