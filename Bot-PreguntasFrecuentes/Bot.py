@@ -59,6 +59,40 @@ def setup_handlers():
                 "🌟 <b>¡Bienvenido!</b> 🌟\n\nSelecciona una categoría:"
             )
 
+    @config.bot_instance.message_handler(commands=['id'])
+    def show_user_info(message):
+        """Muestra la información del usuario"""
+        user = message.from_user
+        
+        # Construir la información del usuario
+        user_info = [
+            "🆔 <b>Tu información:</b>",
+            f"📌 <b>ID:</b> <code>{user.id}</code>",
+            f"👤 <b>Nombre:</b> {user.first_name or 'No proporcionado'}",
+            f"👥 <b>Apellido:</b> {user.last_name or 'No proporcionado'}",
+            f"🔖 <b>Username:</b> @{user.username}" if user.username else "🔖 <b>Username:</b> No tiene",
+            f"🌐 <b>Idioma:</b> {user.language_code or 'No detectado'}",
+            f"🤖 <b>Es bot:</b> {'Sí' if user.is_bot else 'No'}",
+            "",
+            f"💬 <b>ID del chat:</b> <code>{message.chat.id}</code>",
+            f"📝 <b>Tipo de chat:</b> {message.chat.type}"
+        ]
+        
+        # Para grupos/canales, añadir información adicional
+        if message.chat.type != 'private':
+            user_info.extend([
+                "",
+                f"👥 <b>Nombre del {message.chat.type}:</b> {message.chat.title}",
+                f"👤 <b>Username del {message.chat.type}:</b> @{message.chat.username}" if hasattr(message.chat, 'username') and message.chat.username else ""
+            ])
+        
+        # Enviar la información formateada
+        config.bot_instance.reply_to(
+            message,
+            "\n".join(user_info),
+            parse_mode='HTML'
+        )
+
     # Manejadores para el menú principal
     @config.bot_instance.message_handler(func=lambda m: m.text == "📚 Preguntas" and es_admin(m.from_user.id))
     def preguntas_menu(message):

@@ -102,41 +102,103 @@ def iniciar_eliminar_admin(message):
 
     markup = types.ReplyKeyboardMarkup(
         one_time_keyboard=True, resize_keyboard=True)
+    
+    # Obtener información de cada admin
     for admin_id in config.ADMIN_IDS:
-        markup.add(str(admin_id))
+        try:
+            # Intentar obtener información del usuario
+            user = config.bot_instance.get_chat(admin_id)
+            username = f"@{user.username}" if user.username else "Sin usuario"
+            first_name = user.first_name or "Sin nombre"
+            last_name = f" {user.last_name}" if user.last_name else ""
+            full_name = f"{first_name}{last_name}"
+            
+            # Crear texto para el botón y mostrar información
+            button_text = f"{full_name} ({username})"
+            markup.add(button_text)
+            
+            # Mostrar información detallada
+            config.bot_instance.send_message(
+                message.chat.id,
+                f"👤 Admin ID: {admin_id}\n"
+                f"Nombre: {full_name}\n"
+                f"Usuario: {username}\n"
+                "────────────────────"
+            )
+        except Exception as e:
+            print(f"Error al obtener info del admin {admin_id}: {str(e)}")
+            # Si falla, mostrar solo el ID
+            markup.add(str(admin_id))
+    
     markup.add("🔙 Cancelar")
 
     msg = config.bot_instance.send_message(
         message.chat.id,
-        "🗑️ Selecciona el ID del administrador a eliminar:",
+        "🗑️ Selecciona el administrador a eliminar:",
         reply_markup=markup
     )
     config.bot_instance.register_next_step_handler(
         msg, procesar_eliminar_admin)
-
-
+    
 def procesar_eliminar_admin(message):
     """Procesa la eliminación del administrador"""
     if message.text == "🔙 Cancelar":
         return menu_administradores(message.chat.id)
 
     try:
-        admin_id = int(message.text.strip())
+        # Extraer el ID del admin del texto del botón (que ahora puede contener más info)
+        # Buscar el admin cuyo botón coincide con el texto seleccionado
+        selected_text = message.text.strip()
+        admin_id = None
+        
+        # Primero intentamos encontrar coincidencia con los botones que tienen texto completo
+        for id in config.ADMIN_IDS:
+            try:
+                user = config.bot_instance.get_chat(id)
+                username = f"@{user.username}" if user.username else "Sin usuario"
+                first_name = user.first_name or "Sin nombre"
+                last_name = f" {user.last_name}" if user.last_name else ""
+                full_name = f"{first_name}{last_name}"
+                button_text = f"{full_name} ({username})"
+                
+                if selected_text == button_text:
+                    admin_id = id
+                    break
+            except:
+                # Si falla, comparar directamente con el ID
+                if selected_text == str(id):
+                    admin_id = id
+                    break
+        
+        if admin_id is None:
+            # Si no encontramos coincidencia, intentar extraer el ID directamente
+            admin_id = int(selected_text.split()[0])  # Esto es un fallback por si acaso
     except ValueError:
-        config.bot_instance.reply_to(message, "❌ ID inválido.")
+        config.bot_instance.reply_to(message, "❌ Selección inválida.")
+        return menu_administradores(message.chat.id)
+    except Exception as e:
+        config.bot_instance.reply_to(message, f"❌ Error: {str(e)}")
         return menu_administradores(message.chat.id)
 
     if admin_id not in config.ADMIN_IDS:
         config.bot_instance.reply_to(
-            message, "❌ Este ID no está en la lista de administradores.")
+            message, "❌ Este usuario no está en la lista de administradores.")
     else:
         config.ADMIN_IDS.remove(admin_id)
         actualizar_lista_admins()
-        config.bot_instance.reply_to(
-            message, f"✅ Administrador {admin_id} eliminado.")
+        
+        # Obtener info del admin eliminado para el mensaje
+        try:
+            user = config.bot_instance.get_chat(admin_id)
+            username = f"@{user.username}" if user.username else "Sin usuario"
+            name = user.first_name or "Administrador"
+            config.bot_instance.reply_to(
+                message, f"✅ Administrador eliminado: {name} ({username})")
+        except:
+            config.bot_instance.reply_to(
+                message, f"✅ Administrador ID {admin_id} eliminado.")
 
     menu_administradores(message.chat.id)
-
 
 def actualizar_lista_admins():
     """Actualiza el archivo config.py con la lista actual de administradores"""
