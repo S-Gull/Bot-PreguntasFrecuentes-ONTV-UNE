@@ -14,7 +14,7 @@ CREDENTIALS_FILE = os.path.join(
 # ==============================================
 # (Agrega los IDs de los administradores como números enteros)
 # ==============================================
-ADMIN_IDS = [1181943029, 1851963523]  # Reemplaza con tus IDs reales
+ADMIN_IDS = [1851963523, 1181943029]  # Reemplaza con tus IDs reales
 
 # Variables globales que se inicializarán después
 bot_instance = None

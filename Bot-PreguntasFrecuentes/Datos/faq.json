@@ -1,6 +1,6 @@
 {
   "bienvenida": "🌟 ¡Bienvenido al bot de la ONTV (Organización Nacional de Trasplantes de Venezuela)! 🌟\n\nAquí encontrarás información verificada sobre donación y trasplantes. Usa /start para comenzar.",
-   "categorias": [
+  "categorias": [
     {
       "nombre": "Sobre la ONTV",
       "preguntas": [

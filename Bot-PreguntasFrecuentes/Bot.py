@@ -98,14 +98,27 @@ def setup_handlers():
     def preguntas_menu(message):
         menu_preguntas(message.chat.id)
 
+    @config.bot_instance.message_handler(func=lambda m: m.text == "📁 Categorías" and es_admin(m.from_user.id))
+    def categorias_menu(message):
+        menu_categorias(message.chat.id)
+
     @config.bot_instance.message_handler(func=lambda m: m.text == "👑 Administradores" and es_admin(m.from_user.id))
     def admins_menu(message):
         menu_administradores(message.chat.id)
+    
+    # NUEVO: Manejador para ver como usuario
+    @config.bot_instance.message_handler(func=lambda m: m.text == "👁️ Ver como Usuario" and es_admin(m.from_user.id))
+    def ver_como_usuario_handler(message):
+        ver_como_usuario(message.chat.id)
 
     # Manejadores para el menú de preguntas
     @config.bot_instance.message_handler(func=lambda m: m.text == "📝 Agregar Pregunta" and es_admin(m.from_user.id))
     def add_question_handler(message):
         iniciar_agregar_pregunta(message)
+
+    @config.bot_instance.message_handler(func=lambda m: m.text == "✏️ Editar Pregunta" and es_admin(m.from_user.id))
+    def edit_question_handler(message):
+        iniciar_editar_pregunta(message)
 
     @config.bot_instance.message_handler(func=lambda m: m.text == "📋 Listar Preguntas" and es_admin(m.from_user.id))
     def list_questions_handler(message):
@@ -138,6 +151,8 @@ def setup_handlers():
     def handle_callbacks(call):
         if call.data == "volver":
             show_categories(call.message.chat.id)
+        elif call.data == "volver_admin":  # NUEVO: Callback especial para volver al panel admin
+            menu_admin(call.message.chat.id)
         elif call.data.startswith('categoria_'):
             handle_category_selection(call)
         elif call.data.startswith('pregunta_'):
@@ -225,6 +240,18 @@ def handle_question_selection(call):
     ))
     config.bot_instance.send_message(
         call.message.chat.id, "¿Necesitas algo más?", reply_markup=markup)
+
+
+def create_category_handler(message):
+    iniciar_crear_categoria(message)
+
+
+def list_categories_handler(message):
+    listar_categorias(message)
+
+
+def delete_category_handler(message):
+    iniciar_eliminar_categoria(message)
 
 
 if __name__ == '__main__':
