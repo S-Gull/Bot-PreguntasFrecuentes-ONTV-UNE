@@ -1,0 +1,7 @@
+﻿Bot-PreguntasFrecuentes/.vscode
+venv
+Bot-PreguntasFrecuentes/__pycache__
+Bot-PreguntasFrecuentes/Datos/Credentials.json
+Bot-PreguntasFrecuentes/Datos/**/*.png
+Bot-PreguntasFrecuentes/Datos/**/*.jpg
+.vscode

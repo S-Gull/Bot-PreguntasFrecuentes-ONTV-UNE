@@ -1,0 +1,120 @@
+{
+  "bienvenida": "🌟 ¡Bienvenido al bot de la ONTV (Organización Nacional de Trasplantes de Venezuela)! 🌟\n\nAquí encontrarás información verificada sobre donación y trasplantes. Usa /start para comenzar.",
+  "categorias": [
+    {
+      "nombre": "Sobre la ONTV",
+      "preguntas": [
+        {
+          "pregunta": "¿Qué es la ONTV y cuál es su función?",
+          "respuesta": "La ONTV es una organización no gubernamental sin fines de lucro, fundada en septiembre de 1997 y formalmente autorizada por el Ministerio de Salud para ejecutar el Sistema de Procura de Órganos y Tejidos.\n\n● Su misión fue impulsar, coordinar y profesionalizar la procura de órganos y tejidos para trasplantes, con el objetivo de reducir la brecha entre la demanda de órganos y las donaciones en Venezuela.\n\n● Desarrolló capacidades clave como la capacitación de coordinadores hospitalarios, la creación de redes institucionales y participó en la promulgación de la Ley venezolana de donación y trasplante (2011). Entre 2000 y 2013 la tasa de donación llegó a 4,3 donantes por millón de habitantes en 2012.",
+          "multimedia": ""
+        },
+        {
+          "pregunta": "¿La ONTV depende de algún ministerio o institución del Estado?",
+          "respuesta": "No. Aunque trabajó con el Ministerio de Salud hasta 2014, actualmente es una ONG independiente que ya no ejecuta el sistema oficial de trasplantes.",
+          "multimedia": ""
+        },
+        {
+          "pregunta": "¿Cómo se coordina con hospitales y centros médicos en Venezuela?",
+          "respuesta": "Colabora con hospitales brindando formación, apoyo logístico y acompañamiento a pacientes en diálisis o trasplantados, además de promover la reactivación de los trasplantes en el país.",
+          "multimedia": ""
+        }
+      ]
+    },
+    {
+      "nombre": "Requisitos y Procesos",
+      "preguntas": [
+        {
+          "pregunta": "¿Cómo puedo registrarme como donante de órganos en Venezuela?",
+          "respuesta": "No hace falta registrarse: la ley establece que todos son donantes salvo que digan lo contrario. Puedes contactar a Fundavene para dejar constancia expresa.",
+          "multimedia": ""
+        },
+        {
+          "pregunta": "¿Qué tipos de trasplantes se realizan en Venezuela bajo la ONTV?",
+          "respuesta": "Desde que Fundavene asumió la gestión (2014) y tras la suspensión del SPOT en 2017, los únicos trasplantes que todavía se realizan en el país, aunque de forma limitada, son aquellos de donantes vivos. Los tipos incluyen:\n\n● Riñón y hígado en donante vivo (hasta quinto grado de consanguinidad o cónyuge/unión estable)\n● Trasplante de células progenitoras hematopoyéticas (médula ósea)\n● También están autorizados trasplantes de córneas y válvulas cardíacas, además de corazón en niños",
+          "multimedia": ""
+        },
+        {
+          "pregunta": "¿Puedo donar en vida (ej: riñón o médula ósea)? ¿Qué requisitos hay?",
+          "respuesta": "Sí. Solo entre familiares cercanos o pareja estable. Se requiere compatibilidad y evaluación médica.",
+          "multimedia": ""
+        },
+        {
+          "pregunta": "¿Cómo funciona la lista de espera para trasplantes en Venezuela?",
+          "respuesta": "La lista nacional está suspendida desde 2017. Solo hay trasplantes con donantes vivos y casos registrados en Fundavene.",
+          "multimedia": ""
+        }
+      ]
+    },
+    {
+      "nombre": "Aspectos Legales",
+      "preguntas": [
+        {
+          "pregunta": "¿La donación de órganos es gratuita en Venezuela? ¿Existe comercio ilegal?",
+          "respuesta": "Sí, la donación es totalmente gratuita por ley. El comercio de órganos está prohibido, aunque pueden existir casos ilegales no oficiales.",
+          "multimedia": ""
+        },
+        {
+          "pregunta": "¿Qué ley regula los trasplantes de órganos en Venezuela?",
+          "respuesta": "La Ley sobre Donación y Trasplante de Órganos, Tejidos y Células en Seres Humanos, promulgada en 2011.",
+          "multimedia": ""
+        },
+        {
+          "pregunta": "¿Puede un extranjero recibir un trasplante en Venezuela?",
+          "respuesta": "Sí, pero solo si reside legalmente en el país y cumple los requisitos médicos y legales establecidos por el sistema de salud.",
+          "multimedia": ""
+        }
+      ]
+    },
+    {
+      "nombre": "Mitos y Realidades",
+      "preguntas": [
+        {
+          "pregunta": "¿Es cierto que hay \"robos de órganos\" en Venezuela? ¿Qué dice la ONTV al respecto?",
+          "respuesta": "No hay pruebas de robos de órganos en Venezuela. La ONTV señala que esos casos suelen ser rumores o estafas. La ley prohíbe y penaliza con cárcel el comercio ilegal de órganos.",
+          "multimedia": ""
+        },
+        {
+          "pregunta": "¿La religión o creencias personales afectan la posibilidad de donar órganos?",
+          "respuesta": "No. La mayoría de las religiones aceptan y hasta apoyan la donación como un acto de solidaridad. En Venezuela no hay impedimentos legales por motivos religiosos.",
+          "multimedia": ""
+        }
+      ]
+    },
+    {
+      "nombre": "Emergencias y Soporte",
+      "preguntas": [
+        {
+          "pregunta": "¿Cómo actúa la ONTV en casos de accidentes con posibles donantes?",
+          "respuesta": "Antes coordinaba la procura en hospitales. Ahora, tras la suspensión del sistema en 2017, solo brinda apoyo educativo y promueve su reactivación.",
+          "multimedia": ""
+        },
+        {
+          "pregunta": "¿Hay suficientes órganos disponibles para cubrir la demanda en Venezuela?",
+          "respuesta": "No. La oferta es muy baja y el sistema público está paralizado desde 2017. Miles de pacientes siguen en espera sin opción real de trasplante.",
+          "multimedia": ""
+        },
+        {
+          "pregunta": "¿Cómo puedo reportar irregularidades en procesos de trasplantes?",
+          "respuesta": "Puedes denunciar ante el Ministerio de Salud, Fundavene o directamente al Ministerio Público.",
+          "multimedia": ""
+        },
+        {
+          "pregunta": "¿Dónde puedo obtener más información o asistencia sobre donación de órganos?",
+          "respuesta": "En la página y redes de la ONTV (www.ontv-venezuela.org) o contactando a Fundavene.",
+          "multimedia": ""
+        }
+      ]
+    },
+    {
+      "nombre": "Bictor",
+      "preguntas": [
+        {
+          "pregunta": "a",
+          "respuesta": "suas",
+          "multimedia": "media_158.jpg"
+        }
+      ]
+    }
+  ]
+}
