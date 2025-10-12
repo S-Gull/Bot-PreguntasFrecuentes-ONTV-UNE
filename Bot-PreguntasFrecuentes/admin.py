@@ -1050,9 +1050,12 @@ def iniciar_crear_categoria(message):
     )
     config.bot_instance.register_next_step_handler(msg, procesar_nueva_categoria)
 
-
 def procesar_nueva_categoria(message):
     """Procesa la creación de una nueva categoría"""
+    if message.content_type != 'text':
+        config.bot_instance.reply_to(message, "❌ Debes enviar texto.")
+        return menu_categorias(message.chat.id)
+    
     nombre_categoria = message.text.strip()
     
     if not nombre_categoria:
@@ -1074,13 +1077,12 @@ def procesar_nueva_categoria(message):
     }
     
     config.preguntas['categorias'].append(nueva_categoria)
-    config.guardar_preguntas()
+    config.guardar_preguntas()  # Cambiado de guardar_preguntas() a guardar_preguntas()
     
     config.bot_instance.reply_to(
         message, f"✅ Categoría '{nombre_categoria}' creada exitosamente.")
     
     menu_categorias(message.chat.id)
-
 
 def listar_categorias(message):
     """Lista todas las categorías existentes"""
@@ -1100,7 +1102,6 @@ def listar_categorias(message):
         message.chat.id, texto, parse_mode='HTML')
     
     menu_categorias(message.chat.id)
-
 
 def iniciar_eliminar_categoria(message):
     """Inicia el proceso para eliminar una categoría"""
@@ -1125,8 +1126,6 @@ def iniciar_eliminar_categoria(message):
     )
     config.bot_instance.register_next_step_handler(
         msg, procesar_eliminar_categoria)
-
-
 def procesar_eliminar_categoria(message):
     """Procesa la eliminación de una categoría"""
     if message.text == "🔙 Cancelar":
@@ -1134,22 +1133,57 @@ def procesar_eliminar_categoria(message):
     
     nombre_categoria = message.text.strip()
     categoria_encontrada = None
-    indice_categoria = None
     
     # Buscar la categoría
-    for i, categoria in enumerate(config.preguntas['categorias']):
+    for categoria in config.preguntas['categorias']:
         if categoria['nombre'] == nombre_categoria:
             categoria_encontrada = categoria
-            indice_categoria = i
             break
     
     if not categoria_encontrada:
-        config.bot_instance.reply_to(
-            message, "❌ Categoría no encontrada.")
+        config.bot_instance.reply_to(message, "❌ Categoría no encontrada.")
         return menu_categorias(message.chat.id)
     
+    # Mostrar confirmación
+    num_preguntas = len(categoria_encontrada['preguntas'])
+    markup = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
+    markup.add("✅ Sí, eliminar", "❌ No, cancelar")
+    
+    msg = config.bot_instance.send_message(
+        message.chat.id,
+        f"⚠️ <b>¿Estás seguro de eliminar esta categoría?</b>\n\n"
+        f"📂 Categoría: <b>{nombre_categoria}</b>\n"
+        f"📊 Preguntas asociadas: <b>{num_preguntas}</b>\n\n"
+        f"<i>Esta acción eliminará todas las preguntas de esta categoría y no se puede deshacer.</i>",
+        parse_mode='HTML',
+        reply_markup=markup
+    )
+    
+    user_data = {
+        'categoria': categoria_encontrada,
+        'nombre_categoria': nombre_categoria,
+        'num_preguntas': num_preguntas
+    }
+    
+    config.bot_instance.register_next_step_handler(msg, confirmar_eliminacion_categoria, user_data)
+
+def confirmar_eliminacion_categoria(message, user_data):
+    """Confirma la eliminación de la categoría"""
+    if message.text == "❌ No, cancelar":
+        config.bot_instance.send_message(message.chat.id, "❌ Eliminación cancelada.")
+        return menu_categorias(message.chat.id)
+    
+    if message.text != "✅ Sí, eliminar":
+        config.bot_instance.send_message(message.chat.id, "❌ Opción inválida.")
+        return menu_categorias(message.chat.id)
+    
+    # Proceder con la eliminación
+    categoria = user_data['categoria']
+    nombre_categoria = user_data['nombre_categoria']
+    num_preguntas = user_data['num_preguntas']
+    
     # Eliminar archivos multimedia asociados
-    for pregunta in categoria_encontrada['preguntas']:
+    for pregunta in categoria['preguntas']:
         if pregunta.get('multimedia'):
             multimedia_path = os.path.join(
                 config.MULTIMEDIA_DIR, pregunta['multimedia'])
@@ -1160,19 +1194,17 @@ def procesar_eliminar_categoria(message):
                 print(f"Error al eliminar archivo multimedia: {e}")
     
     # Eliminar la categoría
-    num_preguntas = len(categoria_encontrada['preguntas'])
-    config.preguntas['categorias'].pop(indice_categoria)
+    config.preguntas['categorias'] = [c for c in config.preguntas['categorias'] if c['nombre'] != nombre_categoria]
     config.guardar_preguntas()
     
-    config.bot_instance.reply_to(
-        message, 
-        f"✅ Categoría '{nombre_categoria}' eliminada exitosamente.\n"
-        f"📊 Se eliminaron {num_preguntas} pregunta(s) asociada(s)."
+    config.bot_instance.send_message(
+        message.chat.id, 
+        f"✅ Categoría <b>'{nombre_categoria}'</b> eliminada exitosamente.\n"
+        f"📊 Se eliminaron <b>{num_preguntas}</b> pregunta(s) asociada(s).",
+        parse_mode='HTML'
     )
     
     menu_categorias(message.chat.id)
-
-
 def ver_como_usuario(chat_id):
     """Permite al admin ver el bot como lo vería un usuario normal"""
     from Bot import show_categories

@@ -145,6 +145,18 @@ def setup_handlers():
     def remove_admin_handler(message):
         iniciar_eliminar_admin(message)
 
+    @config.bot_instance.message_handler(func=lambda m: m.text == "➕ Crear Categoría" and es_admin(m.from_user.id))
+    def create_category_handler(message):
+        iniciar_crear_categoria(message)
+
+    @config.bot_instance.message_handler(func=lambda m: m.text == "📋 Listar Categorías" and es_admin(m.from_user.id))
+    def list_categories_handler(message):
+        listar_categorias(message)
+
+    @config.bot_instance.message_handler(func=lambda m: m.text == "🗑️ Eliminar Categoría" and es_admin(m.from_user.id))
+    def delete_category_handler(message):
+        iniciar_eliminar_categoria(message)
+
     # Manejo de callbacks para preguntas frecuentes
     @config.bot_instance.callback_query_handler(func=lambda call: True)
     def handle_callbacks(call):
