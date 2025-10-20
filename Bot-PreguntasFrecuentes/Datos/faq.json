@@ -105,6 +105,16 @@
           "multimedia": ""
         }
       ]
+    },
+    {
+      "nombre": "peme",
+      "preguntas": [
+        {
+          "pregunta": "a",
+          "respuesta": "b",
+          "multimedia": "media_208.jpg"
+        }
+      ]
     }
   ]
 }
